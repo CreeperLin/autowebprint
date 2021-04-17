@@ -5,7 +5,7 @@ Automatically printing web pages (to PDFs) using browsers and selenium in Python
 ## Requirements
 
 - Firefox & Geckodriver
-- Xvfb
+- Xvfb (if no GUI available)
 - Python3
 - Selenium on Python
 
@@ -22,7 +22,7 @@ Print a single page:
 
 ```python
 from autowebprint import webprint
-webprint('https://bing.com')
+webprint('https://example.org')
 ```
 
 Print multiple pages:
@@ -50,5 +50,8 @@ A predefined set of preferences can be used by passing ``ff-a4-L`` as prefs argu
 AutoWebPrint can also be used as a command-line tool.
 
 ```bash
-python3 -m autowebprint https://bing.com -f ./out -o prefs=ff-a4-L
+# single page
+python3 -m autowebprint https://example.org -f example.pdf -o prefs=ff-a4-L
+# multiple pages (2 threads, verbose output)
+python3 -m autowebprint https://example.com https://example.org -f ./out -o prefs=ff-a4-L -o n_threads=2 -v
 ```

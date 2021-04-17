@@ -68,7 +68,6 @@ def print_page(driver, url, outfile, prefs=None, get_fn=None, to_load=1, to_prin
     except selenium.common.exceptions.WebDriverException:
         logger.error('Failed: {}\n{}'.format(url, traceback.format_exc()))
     if close:
-        driver.close()
         driver.quit()
 
 
@@ -107,15 +106,14 @@ def driver_firefox(specs, prefs=None, windowed=True, n_threads=4, **kwargs):
                 logger.debug('Waiting for idle threads')
                 time.sleep(1)
             logger.debug('New thread: {}'.format(th_idx))
-            th = threading.Thread(target=print_page, args=(driver, url, outfile, page_prefs), kwargs=kwargs)
+            th = threading.Thread(name=url, target=print_page, args=(driver, url, outfile, page_prefs), kwargs=kwargs)
             th.start()
             threads[th_idx] = th
         else:
             print_page(driver, url, outfile, page_prefs, **kwargs)
     for th in threads:
         if th is not None and th.is_alive():
-            logger.debug('Waiting for thread: {}'.format(th))
+            logger.debug('Waiting for thread: {}'.format(th.name))
             th.join()
     if not windowed:
-        driver.close()
         driver.quit()
