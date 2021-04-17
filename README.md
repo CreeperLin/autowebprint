@@ -22,7 +22,7 @@ Print a single page:
 
 ```python
 from autowebprint import webprint
-webprint(urls='https://bing.com')
+webprint('https://bing.com')
 ```
 
 Print multiple pages:
