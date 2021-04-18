@@ -37,7 +37,7 @@ _displays = {k[:-7].lower(): v for k, v in displays.__dict__.items() if k.endswi
 def proc_url(url):
     if os.path.exists(url):
         url = open(url, 'r').read()
-    return [ln.strip() for ln in url.split('\n') if len(ln) > 1]
+    return [ln.strip() for ln in url.split() if len(ln) > 1]
 
 
 def get_specs(urls, outfiles):
